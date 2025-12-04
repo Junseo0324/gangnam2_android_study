@@ -47,7 +47,6 @@ fun MediumButton(
             )
             .clickable(
                 interactionSource = interactionSource,
-                indication = null,
                 onClick = onClick
             )
     ) {

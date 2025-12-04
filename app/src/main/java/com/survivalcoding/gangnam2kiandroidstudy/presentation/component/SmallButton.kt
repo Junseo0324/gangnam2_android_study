@@ -45,7 +45,6 @@ fun SmallButton(
             )
             .clickable(
                 interactionSource = interactionSource,
-                indication = null,
                 onClick = onClick
             )
     ) {

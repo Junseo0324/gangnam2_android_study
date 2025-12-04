@@ -49,7 +49,6 @@ fun BigButton(
             )
             .clickable(
                 interactionSource = interactionSource,
-                indication = null,
                 onClick = onClick
             )
     ) {
