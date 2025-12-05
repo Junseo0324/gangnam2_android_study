@@ -40,7 +40,7 @@ fun SignInScreen() {
         modifier = Modifier.fillMaxSize()
     ) {
         Column(
-            modifier = Modifier.padding(start = 30.dp, top = 50.dp, bottom = 57.dp)
+            modifier = Modifier.padding(start = 30.dp, top = 94.dp, bottom = 57.dp)
         ) {
             Text(
                 text = "Hello,",

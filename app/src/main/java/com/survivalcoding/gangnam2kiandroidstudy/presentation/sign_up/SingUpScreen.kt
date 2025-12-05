@@ -57,10 +57,10 @@ fun SignUpScreen() {
     var isChecked by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
-            modifier = Modifier.padding(start = 30.dp, top = 10.dp, bottom = 20.dp, end = 150.dp)
+            modifier = Modifier.padding(start = 30.dp, top = 54.dp, bottom = 20.dp, end = 150.dp)
         ) {
             Text(
                 text = "Create an account",
@@ -216,7 +216,8 @@ fun SignUpScreen() {
                         append("Sign In")
                     }
                 },
-                style = AppTextStyles.smallerTextBold
+                style = AppTextStyles.smallerTextBold,
+                modifier = Modifier.padding(bottom = 30.dp)
             )
 
         }
