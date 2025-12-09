@@ -1,7 +1,7 @@
 package com.survivalcoding.gangnam2kiandroidstudy.data.datasource
 
-import com.survivalcoding.gangnam2kiandroidstudy.data.model.Recipe
+import com.survivalcoding.gangnam2kiandroidstudy.data.dto.RecipeDto
 
 interface RecipeDataSource {
-    suspend fun getRecipes(): List<Recipe>
+    suspend fun getRecipes(): List<RecipeDto>
 }
