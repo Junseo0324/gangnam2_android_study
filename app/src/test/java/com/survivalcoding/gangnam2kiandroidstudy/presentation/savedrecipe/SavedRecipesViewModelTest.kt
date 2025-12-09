@@ -54,11 +54,11 @@ class SavedRecipesViewModelTest {
 
         // Then
         val recipes = viewModel.recipes.value
-        assertEquals(recipes.size, 4)
-        assertEquals(recipes[0].title, recipeList[0].title)
-        assertEquals(recipes[1].title, recipeList[1].title)
-        assertEquals(recipes[2].title, recipeList[2].title)
-        assertEquals(recipes[3].title, recipeList[3].title)
+        assertEquals(4, recipes.size)
+        assertEquals(recipeList[0].title, recipes[0].title)
+        assertEquals(recipeList[1].title, recipes[1].title)
+        assertEquals(recipeList[2].title, recipes[2].title)
+        assertEquals(recipeList[3].title, recipes[3].title)
     }
 
 }

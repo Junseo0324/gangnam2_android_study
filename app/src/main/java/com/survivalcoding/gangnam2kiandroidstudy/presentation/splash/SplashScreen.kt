@@ -69,9 +69,7 @@ fun SplashScreen() {
             MediumButton(
                 text = "Start Cooking",
                 modifier = Modifier.padding(horizontal = 66.dp).padding(bottom = 84.dp)
-            ) {
-
-            }
+            )
         }
     }
 }
