@@ -38,10 +38,11 @@ class SearchRecipesViewModel(
     fun getAllRecipes() {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
+            val recipes = recipeRepository.getRecipes()
             _state.update {
                 it.copy(
-                    recipes = recipeRepository.getRecipes(),
-                    filteredRecipes = recipeRepository.getRecipes(),
+                    recipes = recipes,
+                    filteredRecipes = recipes,
                     isLoading = false
                 )
             }
