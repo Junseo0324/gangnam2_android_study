@@ -57,7 +57,6 @@ class SearchRecipesViewModel(
     fun filterRecipes(
         query: String,
         rating: String? = null,
-        time: String? = null,
         category: String? = null,
     ) {
         viewModelScope.launch {

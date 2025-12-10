@@ -114,42 +114,17 @@ fun FilterSearchBottomSheet(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    FilterButton(
-                        text = "All",
-                        isSelected = "All" == filterState.selectedCategoryText,
-                        onClick = {
-                            val newCategory =
-                                if ("All" == filterState.selectedCategoryText) null else "All"
-                            filterState = filterState.copy(selectedCategoryText = newCategory)
-                        }
-                    )
-                    FilterButton(
-                        text = "Cereal",
-                        isSelected = "Cereal" == filterState.selectedCategoryText,
-                        onClick = {
-                            val newCategory =
-                                if ("Cereal" == filterState.selectedCategoryText) null else "Cereal"
-                            filterState = filterState.copy(selectedCategoryText = newCategory)
-                        }
-                    )
-                    FilterButton(
-                        text = "Vegetables",
-                        isSelected = "Vegetables" == filterState.selectedCategoryText,
-                        onClick = {
-                            val newCategory =
-                                if ("Vegetables" == filterState.selectedCategoryText) null else "Vegetables"
-                            filterState = filterState.copy(selectedCategoryText = newCategory)
-                        }
-                    )
-                    RatingButton(
-                        text = "Dinner",
-                        isSelected = "Dinner" == filterState.selectedCategoryText,
-                        onClick = {
-                            val newCategory =
-                                if ("Dinner" == filterState.selectedCategoryText) null else "Dinner"
-                            filterState = filterState.copy(selectedCategoryText = newCategory)
-                        }
-                    )
+                    listOf("All", "Cereal", "Vegetables", "Dinner").forEach { text ->
+                        FilterButton(
+                            text = text,
+                            isSelected = text == filterState.selectedCategoryText,
+                            onClick = {
+                                val newCategory =
+                                    if (text == filterState.selectedCategoryText) null else text
+                                filterState = filterState.copy(selectedCategoryText = newCategory)
+                            }
+                        )
+                    }
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Row(
