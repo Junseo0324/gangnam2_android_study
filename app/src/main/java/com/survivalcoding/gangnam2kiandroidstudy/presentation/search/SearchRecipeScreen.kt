@@ -78,7 +78,7 @@ fun SearchRecipeScreen(
                     style = AppTextStyles.normalTextBold,
                 )
                 Text(
-                    text = state.value.filteredRecipesSize,
+                    text = state.value.filteredRecipesText,
                     style = AppTextStyles.smallerTextRegular.copy(color = AppColors.gray3)
                 )
             }
