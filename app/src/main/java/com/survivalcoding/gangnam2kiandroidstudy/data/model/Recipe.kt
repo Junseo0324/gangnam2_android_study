@@ -7,4 +7,5 @@ data class Recipe(
     val category: String,
     val rating: Double,
     val imageUrls: String,
+    val createdAt: Long,
 )

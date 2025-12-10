@@ -28,9 +28,10 @@ class SearchRecipesViewModel(
         getAllRecipes()
 
         _state.map { it.searchQuery }
-            .debounce(100)
+            .debounce(300)
             .onEach { query ->
-                filterRecipes(query)
+//                filterRecipes(query)
+                executeFiltering()
             }
             .launchIn(viewModelScope)
     }
@@ -54,51 +55,83 @@ class SearchRecipesViewModel(
         }
     }
 
-    fun filterRecipes(
-        query: String,
-        rating: String? = null,
-        category: String? = null,
-    ) {
-        viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
-
-            val newSearchText = if (query.isBlank()) {
-                "Recent Search"
-            } else {
-                "Search Result"
-            }
-
-            val queryFilteredRecipes = _state.value.recipes.filter { recipe ->
-                recipe.title.contains(query, ignoreCase = true)
-            }
-
-            val filteredRecipeText = if (query.isBlank()) {
-                ""
-            } else {
-                "${
-                    queryFilteredRecipes.size
-                } results"
-            }
-
-            _state.update {
-                it.copy(
-                    filteredRecipes = queryFilteredRecipes,
-                    filteredRecipesText = filteredRecipeText,
-                    searchText = newSearchText,
-                    isLoading = false
-                )
-            }
-        }
-    }
-
     fun applyFilters(newFilterState: FilterSearchState) {
         _state.update {
             it.copy(filterState = newFilterState)
         }
+        executeFiltering()
     }
     fun showBottomSheet(isFilterOpen: Boolean) {
         _state.update {
             it.copy(showBottomSheet = isFilterOpen)
+        }
+    }
+
+    private fun executeFiltering() {
+        val query = _state.value.searchQuery
+        val filters = _state.value.filterState
+        var resultList = _state.value.recipes
+
+        if (query.isNotBlank()) {
+            resultList = resultList.filter { recipe ->
+                recipe.title.contains(query, ignoreCase = true)
+            }
+        }
+
+        if (filters.selectedCategoryText != null && filters.selectedCategoryText != "All") {
+            resultList = resultList.filter { recipe ->
+                recipe.category.equals(filters.selectedCategoryText, ignoreCase = true)
+            }
+        }
+
+        filters.selectedRateText?.let { rateString ->
+            val rate = rateString.toDoubleOrNull() ?: 0.0
+            resultList = resultList.filter { recipe ->
+                recipe.rating >= rate
+            }
+        }
+
+        if (filters.selectedTimeText != null && filters.selectedTimeText != "All") {
+            val currentTime = System.currentTimeMillis()
+            val day = 24 * 60 * 60 * 1000L
+
+            resultList = when (filters.selectedTimeText) {
+                "Newest" -> {
+                    val sevenDaysAgo = currentTime - (7 * day)
+                    resultList.filter { it.createdAt >= sevenDaysAgo }
+                }
+                "Oldest" -> {
+                    val thirtyDaysAgo = currentTime - (30 * day)
+                    resultList.filter { it.createdAt <= thirtyDaysAgo }
+                }
+                "Popularity" -> {
+                    resultList.filter { it.rating >= 4.5 }
+                }
+                else -> resultList
+            }
+        }
+
+        val isCategoryActive = filters.selectedCategoryText != null && filters.selectedCategoryText != "All"
+        val isRateActive = filters.selectedRateText != null
+        val isTimeActive = filters.selectedTimeText != null && filters.selectedTimeText != "All"
+
+        val isFilterActive = isCategoryActive || isRateActive || isTimeActive
+
+        val newSearchText = if (query.isBlank()) "Recent Search" else "Search Result"
+
+        val filteredRecipeText = if (!(query.isNotBlank()) && !isFilterActive) {
+            ""
+        } else {
+            "${resultList.size} results"
+        }
+
+        _state.update {
+            it.copy(
+                filteredRecipes = resultList,
+                filteredRecipesText = filteredRecipeText,
+                searchText = newSearchText,
+                isLoading = false
+            )
         }
     }
 

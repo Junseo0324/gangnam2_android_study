@@ -141,7 +141,8 @@ private fun SearchRecipeCardPreview() {
             time = "20 min",
             category = "Chinese",
             rating = 4.0,
-            imageUrls = "image"
+            imageUrls = "image",
+            createdAt = System.currentTimeMillis()
         )
     )
 

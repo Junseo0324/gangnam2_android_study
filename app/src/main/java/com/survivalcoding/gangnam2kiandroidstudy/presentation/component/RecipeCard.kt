@@ -194,7 +194,8 @@ private fun RecipeCardPreview() {
                 chef = "Chef John",
                 category = "Chinese",
                 rating = 4.0,
-                time = "20 min"
+                time = "20 min",
+                createdAt = System.currentTimeMillis()
             )
         )
     }

@@ -1,10 +1,17 @@
 package com.survivalcoding.gangnam2kiandroidstudy.presentation.search
 
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.survivalcoding.gangnam2kiandroidstudy.data.model.Recipe
 import com.survivalcoding.gangnam2kiandroidstudy.data.repository.RecipeRepository
+import com.survivalcoding.gangnam2kiandroidstudy.data.util.date
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceTimeBy
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 
 
@@ -17,7 +24,8 @@ class SearchRecipesViewModelTest {
             time = "20 min",
             category = "Chinese",
             rating = 4.0,
-            imageUrls = "https://cdn.pixabay.com/photo/2017/11/10/15/04/steak-2936531_1280.jpg"
+            imageUrls = "https://cdn.pixabay.com/photo/2017/11/10/15/04/steak-2936531_1280.jpg",
+            createdAt = date("2025-12-10")
         ),
         Recipe(
             title = "Spice roasted chicken with flavored rice",
@@ -25,31 +33,47 @@ class SearchRecipesViewModelTest {
             time = "20 min",
             category = "Chinese",
             rating = 4.0,
-            imageUrls = "https://cdn.pixabay.com/photo/2018/12/04/16/49/tandoori-3856045_1280.jpg"
+            imageUrls = "https://cdn.pixabay.com/photo/2018/12/04/16/49/tandoori-3856045_1280.jpg",
+            createdAt = date("2025-10-10")
         ),
         Recipe(
             title = "Spicy fried rice mix chicken bali",
             chef = "Spicy Nelly",
             time = "20 min",
-            category = "Chinese",
+            category = "Italian",
             rating = 4.0,
-            imageUrls = "https://cdn.pixabay.com/photo/2019/09/07/19/02/spanish-paella-4459519_1280.jpg"
+            imageUrls = "https://cdn.pixabay.com/photo/2019/09/07/19/02/spanish-paella-4459519_1280.jpg",
+            createdAt = date("2025-12-04")
         ),
         Recipe(
             title = "Ttekbokki",
             chef = "Kim Dahee",
             time = "30 min",
-            category = "Chinese",
+            category = "Korean",
             rating = 5.0,
-            imageUrls = "https://cdn.pixabay.com/photo/2017/07/27/16/48/toppokki-2545943_1280.jpg"
+            imageUrls = "https://cdn.pixabay.com/photo/2017/07/27/16/48/toppokki-2545943_1280.jpg",
+            createdAt = date("2020-12-10")
         )
     )
+
     private val mockRepository = object : RecipeRepository {
         override suspend fun getRecipes(): List<Recipe> {
             return recipeList
         }
     }
-    private val viewModel = SearchRecipesViewModel(mockRepository)
+
+    private lateinit var viewModel: SearchRecipesViewModel
+
+    @Before
+    fun setUp() {
+        Dispatchers.setMain(StandardTestDispatcher())
+        viewModel = SearchRecipesViewModel(mockRepository)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+    }
 
     @Test
     fun `viewModel이 데이터를 잘 가져오는지 테스트`() = runTest {
@@ -66,17 +90,36 @@ class SearchRecipesViewModelTest {
     }
 
     @Test
-    fun `viewModel 이 필터링을 잘 하는지 테스트()`() = runTest {
-        viewModel.filterRecipes("Ttekbokki")
+    fun `viewModel 카테고리 필터링 테스트()`() = runTest {
+        val filter = FilterSearchState(selectedCategoryText = "Chinese")
+        viewModel.applyFilters(filter)
+
+        val filteredRecipes = viewModel.state.value.filteredRecipes
+        assertEquals(2, filteredRecipes.size)
+        assertEquals("Traditional spare ribs baked", filteredRecipes[0].title)
+        assertEquals("Spice roasted chicken with flavored rice", filteredRecipes[1].title)
+    }
+
+    @Test
+    fun `viewModel 시간 필터링 테스트()`() = runTest {
+        val filter = FilterSearchState(selectedTimeText = "Oldest")
+        viewModel.applyFilters(filter)
+
+        val filteredRecipes = viewModel.state.value.filteredRecipes
+        assertEquals(2, filteredRecipes.size)
+        assertEquals("Spice roasted chicken with flavored rice", filteredRecipes[0].title)
+    }
+
+    @Test
+    fun `viewModel 검색어와 평점 필터가 동시에 적용 필터링 테스트()`() = runTest {
+        val filter = FilterSearchState(selectedRateText = "4")
+        viewModel.updateSearchQuery("Spicy")
+        advanceTimeBy(301)
+        viewModel.applyFilters(filter)
 
         val filteredRecipes = viewModel.state.value.filteredRecipes
         assertEquals(1, filteredRecipes.size)
-        assertEquals("Ttekbokki", filteredRecipes[0].title)
-        assertEquals("Kim Dahee", filteredRecipes[0].chef)
-        assertEquals("30 min", filteredRecipes[0].time)
-        assertEquals("Chinese", filteredRecipes[0].category)
-        assertEquals(5.0, filteredRecipes[0].rating, 0.0)
-        assertEquals("https://cdn.pixabay.com/photo/2017/07/27/16/48/toppokki-2545943_1280.jpg", filteredRecipes[0].imageUrls)
+        assertEquals("Spicy fried rice mix chicken bali", filteredRecipes[0].title)
     }
 
 
