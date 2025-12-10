@@ -54,7 +54,7 @@ class SearchRecipesViewModel(
         }
     }
 
-    private fun filterRecipes(
+    fun filterRecipes(
         query: String,
         rating: String? = null,
         time: String? = null,
@@ -69,21 +69,21 @@ class SearchRecipesViewModel(
                 "Search Result"
             }
 
+            val queryFilteredRecipes = _state.value.recipes.filter { recipe ->
+                recipe.title.contains(query, ignoreCase = true)
+            }
+
             val filteredRecipeText = if (query.isBlank()) {
                 ""
             } else {
                 "${
-                    _state.value.recipes.filter { recipe ->
-                        recipe.title.contains(query, ignoreCase = true)
-                    }.size
+                    queryFilteredRecipes.size
                 } results"
             }
 
             _state.update {
                 it.copy(
-                    filteredRecipes = it.recipes.filter { recipe ->
-                        recipe.title.contains(query, ignoreCase = true)
-                    },
+                    filteredRecipes = queryFilteredRecipes,
                     filteredRecipesText = filteredRecipeText,
                     searchText = newSearchText,
                     isLoading = false
@@ -96,7 +96,11 @@ class SearchRecipesViewModel(
         _state.update {
             it.copy(filterState = newFilterState)
         }
-
+    }
+    fun showBottomSheet(isFilterOpen: Boolean) {
+        _state.update {
+            it.copy(showBottomSheet = isFilterOpen)
+        }
     }
 
     companion object {

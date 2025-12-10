@@ -17,10 +17,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,7 +38,6 @@ fun SearchRecipeScreen(
     )
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle()
-    var showBottomSheet by remember { mutableStateOf(false) }
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         containerColor = AppColors.white
@@ -73,7 +68,7 @@ fun SearchRecipeScreen(
                 }
                 Spacer(modifier = Modifier.width(20.dp))
                 FilterBox {
-                    showBottomSheet = true
+                    viewModel.showBottomSheet(true)
                 }
             }
             Spacer(modifier = Modifier.height(20.dp))
@@ -107,16 +102,16 @@ fun SearchRecipeScreen(
             }
         }
 
-        if (showBottomSheet) {
+        if (state.value.showBottomSheet) {
             FilterSearchBottomSheet(
                 sheetState = rememberModalBottomSheetState(),
                 onDismiss = {
-                    showBottomSheet = false
+                    viewModel.showBottomSheet(false)
                 },
                 currentFilterState = state.value.filterState,
                 onApplyFilter = {
                     viewModel.applyFilters(it)
-                    showBottomSheet = false
+                    viewModel.showBottomSheet(false)
                 }
             )
         }

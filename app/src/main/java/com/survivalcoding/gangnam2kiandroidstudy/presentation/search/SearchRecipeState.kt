@@ -9,5 +9,6 @@ data class SearchRecipeState(
     val filteredRecipes: List<Recipe> = emptyList(),
     val filteredRecipesText: String = "",
     val isLoading: Boolean = false,
-    val filterState: FilterSearchState = FilterSearchState()
+    val filterState: FilterSearchState = FilterSearchState(),
+    val showBottomSheet: Boolean = false,
 )
