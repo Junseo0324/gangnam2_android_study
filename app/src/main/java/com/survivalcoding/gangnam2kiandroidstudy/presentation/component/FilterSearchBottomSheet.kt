@@ -38,6 +38,7 @@ fun FilterSearchBottomSheet(
     var filterState by remember { mutableStateOf(currentFilterState) }
 
     ModalBottomSheet(
+        dragHandle = null,
         containerColor = AppColors.white,
         onDismissRequest = {
             onDismiss()
