@@ -60,6 +60,7 @@ class SearchRecipesViewModel(
         }
         filterRecipes()
     }
+
     fun showBottomSheet(isFilterOpen: Boolean) {
         _state.update {
             it.copy(showBottomSheet = isFilterOpen)
@@ -99,18 +100,22 @@ class SearchRecipesViewModel(
                     val sevenDaysAgo = currentTime - (7 * day)
                     resultList.filter { it.createdAt >= sevenDaysAgo }
                 }
+
                 "Oldest" -> {
                     val thirtyDaysAgo = currentTime - (30 * day)
                     resultList.filter { it.createdAt <= thirtyDaysAgo }
                 }
+
                 "Popularity" -> {
                     resultList.filter { it.rating >= 4.5 }
                 }
+
                 else -> resultList
             }
         }
 
-        val isCategoryActive = filters.selectedCategoryText != null && filters.selectedCategoryText != "All"
+        val isCategoryActive =
+            filters.selectedCategoryText != null && filters.selectedCategoryText != "All"
         val isRateActive = filters.selectedRateText != null
         val isTimeActive = filters.selectedTimeText != null && filters.selectedTimeText != "All"
 

@@ -44,7 +44,8 @@ fun FilterButton(
                 width = if (!isSelected) 1.dp else 0.dp,
                 color = if (!isSelected) AppColors.primary80 else AppColors.white,
                 shape = RoundedCornerShape(10.dp)
-            ).clickable {
+            )
+            .clickable {
                 onClick()
             },
         contentAlignment = Alignment.Center

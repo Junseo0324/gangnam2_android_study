@@ -124,7 +124,10 @@ fun SearchRecipeCard(
                 )
                 Text(
                     text = "By ${recipe.chef}",
-                    style = AppTextStyles.smallerTextRegular.copy(fontSize = 8.sp, color = AppColors.gray3),
+                    style = AppTextStyles.smallerTextRegular.copy(
+                        fontSize = 8.sp,
+                        color = AppColors.gray3
+                    ),
                 )
             }
         }
