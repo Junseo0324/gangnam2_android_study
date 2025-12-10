@@ -63,6 +63,7 @@ class SearchRecipesViewModel(
             } else {
                 "Search Result"
             }
+
             val filteredRecipeText = if (query.isBlank()) {
                 ""
             } else {
@@ -70,6 +71,7 @@ class SearchRecipesViewModel(
                     recipe.title.contains(query, ignoreCase = true)
                 }.size} results"
             }
+
             _state.update {
                 it.copy(
                     filteredRecipes = it.recipes.filter { recipe ->
