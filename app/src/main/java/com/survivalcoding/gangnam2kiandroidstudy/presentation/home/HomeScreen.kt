@@ -103,10 +103,10 @@ fun HomeScreen(
                 "All", "Indian", "Italian", "Asian", "Chinese",
                 "Fruit", "Vegetables", "Protein", "Cereal", "Local Dishes"
             ),
+            selectedCategory = state.selectedCategory,
             onSelectCategory = { category ->
                 onSelectCategory(category)
             },
-            selectedCategory = state.selectedCategory
         )
 
         Spacer(modifier = Modifier.height(15.dp))
