@@ -1,9 +1,9 @@
 package com.survivalcoding.gangnam2kiandroidstudy.presentation.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.survivalcoding.gangnam2kiandroidstudy.AppApplication
@@ -11,6 +11,7 @@ import com.survivalcoding.gangnam2kiandroidstudy.data.repository.RecipeRepositor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val recipeRepository: RecipeRepository,
@@ -19,14 +20,37 @@ class HomeViewModel(
     private val _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
 
+    init {
+        getAllRecipes()
+    }
 
     fun onSelectCategory(category: String) {
         _state.update {
             it.copy(
                 selectedCategory = category,
+                filteredRecipes = if (category == "All") {
+                    _state.value.recipes
+                } else {
+                    _state.value.recipes.filter { recipe ->
+                        recipe.category == category
+                    }
+                }
             )
         }
-        Log.d("HomeViewModel", "onSelectCategory:${_state.value.selectedCategory} ")
+    }
+
+    fun getAllRecipes() {
+        viewModelScope.launch {
+            val recipes = recipeRepository.getRecipes()
+
+            _state.update {
+                it.copy(
+                    recipes = recipes,
+                    filteredRecipes = recipes
+                )
+            }
+
+        }
     }
 
 

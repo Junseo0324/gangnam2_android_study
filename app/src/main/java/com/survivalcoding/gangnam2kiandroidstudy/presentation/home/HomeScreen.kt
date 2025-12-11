@@ -1,7 +1,11 @@
 package com.survivalcoding.gangnam2kiandroidstudy.presentation.home
 
+import android.R.attr.contentDescription
+import android.graphics.Color.YELLOW
+import android.graphics.drawable.ColorDrawable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,16 +16,20 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.survivalcoding.gangnam2kiandroidstudy.R
 import com.survivalcoding.gangnam2kiandroidstudy.presentation.component.FilterBox
+import com.survivalcoding.gangnam2kiandroidstudy.presentation.component.HomeRecipeCard
 import com.survivalcoding.gangnam2kiandroidstudy.presentation.component.RecipeCategorySelector
 import com.survivalcoding.gangnam2kiandroidstudy.presentation.component.SearchInputField
 import com.survivalcoding.gangnam2kiandroidstudy.ui.AppColors
@@ -61,14 +69,18 @@ fun HomeScreen(
                     .size(40.dp)
                     .background(color = AppColors.secondary40, shape = RoundedCornerShape(10.dp))
             ) {
-                Image(
-                    painter = painterResource(R.drawable.profile),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize()
-                )
+                if (!LocalInspectionMode.current) {
+                    Image(
+                        painter = painterResource(R.drawable.profile),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
             }
+
         }
         Spacer(modifier = Modifier.height(30.dp))
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -87,7 +99,9 @@ fun HomeScreen(
                 // filter
             }
         }
+
         Spacer(modifier = Modifier.height(15.dp))
+
         RecipeCategorySelector(
             category = listOf(
                 "All", "Indian", "Italian", "Asian", "Chinese",
@@ -97,6 +111,20 @@ fun HomeScreen(
                 onSelecteedCategory(category)
             }
         )
+
+        Spacer(modifier = Modifier.height(15.dp))
+
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 30.dp),
+            horizontalArrangement = Arrangement.spacedBy(15.dp)
+        ) {
+            items(state.filteredRecipes) { recipe ->
+                HomeRecipeCard(recipe = recipe)
+            }
+        }
+
     }
 }
 
