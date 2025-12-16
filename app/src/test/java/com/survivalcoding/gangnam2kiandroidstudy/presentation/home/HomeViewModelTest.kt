@@ -23,7 +23,8 @@ class HomeViewModelTest {
             category = "Italian",
             rating = 4.0,
             imageUrls = "https://cdn.pixabay.com/photo/2017/11/10/15/04/steak-2936531_1280.jpg",
-            createdAt = date("2025-12-10")
+            createdAt = date("2025-12-10"),
+            id = 0,
         ),
         Recipe(
             title = "Spice roasted chicken with flavored rice",
@@ -32,7 +33,8 @@ class HomeViewModelTest {
             category = "Chinese",
             rating = 4.0,
             imageUrls = "https://cdn.pixabay.com/photo/2018/12/04/16/49/tandoori-3856045_1280.jpg",
-            createdAt = date("2025-10-10")
+            createdAt = date("2025-10-10"),
+            id = 1
         ),
         Recipe(
             title = "Spicy fried rice mix chicken bali",
@@ -41,7 +43,8 @@ class HomeViewModelTest {
             category = "Italian",
             rating = 4.0,
             imageUrls = "https://cdn.pixabay.com/photo/2019/09/07/19/02/spanish-paella-4459519_1280.jpg",
-            createdAt = date("2025-12-04")
+            createdAt = date("2025-12-04"),
+            id = 2
         ),
         Recipe(
             title = "Ttekbokki",
@@ -50,7 +53,8 @@ class HomeViewModelTest {
             category = "Asian",
             rating = 5.0,
             imageUrls = "https://cdn.pixabay.com/photo/2017/07/27/16/48/toppokki-2545943_1280.jpg",
-            createdAt = date("2020-12-10")
+            createdAt = date("2020-12-10"),
+            id = 3
         )
     )
 
