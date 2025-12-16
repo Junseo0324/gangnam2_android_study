@@ -31,11 +31,12 @@ class SavedRecipesViewModel(
                     isLoading = true
                 )
             }
+            val recipes = getSavedRecipesUseCase.execute(id)
 
             _state.update {
                 it.copy(
                     isLoading = false,
-                    recipes = getSavedRecipesUseCase.execute(id)
+                    recipes = recipes
                 )
             }
         }
