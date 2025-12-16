@@ -110,7 +110,7 @@ fun IngredientScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.outline_profile),
+                        painter = painterResource(id = R.drawable.ingrdeintimage),
                         contentDescription = "profile image",
                         modifier = Modifier.size(40.dp),
                         contentScale = ContentScale.Crop

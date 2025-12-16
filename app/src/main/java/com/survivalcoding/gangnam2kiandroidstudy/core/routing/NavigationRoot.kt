@@ -81,7 +81,6 @@ fun NavigationRoot(
                                 entry<Route.SavedRecipes> {
                                     SavedRecipesScreenRoot(
                                         onCardClick = { recipeId ->
-                                            topLevelBackStack.clear()
                                             topLevelBackStack.add(Route.Ingrident(recipeId = recipeId))
                                         }
                                     )
