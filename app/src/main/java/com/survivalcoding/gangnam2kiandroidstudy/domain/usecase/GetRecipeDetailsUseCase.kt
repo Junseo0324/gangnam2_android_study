@@ -10,7 +10,7 @@ class GetRecipeDetailsUseCase(
     private val procedureRepository: ProcedureRepository,
     private val ingridentRepository: IngridentRepository,
 ) {
-    suspend fun execute(recipeId: Int) : RecipeDetail {
+    suspend fun execute(recipeId: Int): RecipeDetail {
         val recipe = recipeRepository.getRecipes().filter { it.id == recipeId }[0]
         val procedures = procedureRepository.getProcedure(recipeId)
         val ingredients = ingridentRepository.getIngrident(recipeId)

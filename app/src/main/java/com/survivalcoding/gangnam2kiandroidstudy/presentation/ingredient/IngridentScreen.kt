@@ -184,7 +184,9 @@ fun IngredientScreen(
             }
             Spacer(modifier = Modifier.height(20.dp))
             LazyColumn(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 30.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 30.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 items(state.ingridents) { ingredient ->
@@ -224,7 +226,9 @@ fun IngredientScreen(
             }
             Spacer(modifier = Modifier.height(20.dp))
             LazyColumn(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 30.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 30.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 items(state.procedures) {

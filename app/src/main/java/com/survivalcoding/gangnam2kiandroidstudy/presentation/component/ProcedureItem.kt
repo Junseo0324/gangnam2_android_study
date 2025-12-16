@@ -21,8 +21,10 @@ fun ProcedureItem(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.fillMaxWidth()
-            .background(color = AppColors.gray4, shape = RoundedCornerShape(12.dp)).padding(horizontal = 15.dp, vertical = 10.dp)
+        modifier = modifier
+            .fillMaxWidth()
+            .background(color = AppColors.gray4, shape = RoundedCornerShape(12.dp))
+            .padding(horizontal = 15.dp, vertical = 10.dp)
     ) {
         Text(
             text = "Step ${procedure.step}",
@@ -30,7 +32,10 @@ fun ProcedureItem(
         )
         Text(
             text = procedure.content,
-            style = AppTextStyles.smallerTextRegular.copy(color = AppColors.gray3, lineHeight = 15.sp)
+            style = AppTextStyles.smallerTextRegular.copy(
+                color = AppColors.gray3,
+                lineHeight = 15.sp
+            )
         )
     }
 }

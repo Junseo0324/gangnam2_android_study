@@ -9,6 +9,7 @@ class ProcedureRepositoryImpl(
     private val procedureDataSource: ProcedureDataSource
 ) : ProcedureRepository {
     override suspend fun getProcedure(recipeId: Int): List<Procedure> {
-        return procedureDataSource.getProcedures().filter { it.recipeId == recipeId }.map { it.toModel() }
+        return procedureDataSource.getProcedures().filter { it.recipeId == recipeId }
+            .map { it.toModel() }
     }
 }

@@ -23,13 +23,15 @@ import com.survivalcoding.gangnam2kiandroidstudy.ui.AppTextStyles
 @Composable
 fun SavedRecipesScreen(
     modifier: Modifier = Modifier,
-    state: SavedRecipesState= SavedRecipesState(),
+    state: SavedRecipesState = SavedRecipesState(),
     onBookmarkClick: (Int) -> Unit = {},
     onCardClick: (Int) -> Unit = {}
 ) {
 
     Column(
-        modifier = modifier.fillMaxSize().background(AppColors.white),
+        modifier = modifier
+            .fillMaxSize()
+            .background(AppColors.white),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(54.dp))
