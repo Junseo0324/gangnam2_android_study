@@ -146,7 +146,8 @@ private fun SearchRecipeCardPreview() {
             rating = 4.0,
             imageUrls = "image",
             createdAt = System.currentTimeMillis(),
-            id = 0
+            id = 0,
+            address = "Seoul"
         )
     )
 

@@ -12,6 +12,7 @@ fun RecipeDto.toModel(): Recipe {
         category = this.category ?: "",
         rating = this.rating ?: 0.0,
         imageUrls = this.image ?: "",
-        createdAt = this.createdAt ?: System.currentTimeMillis()
+        createdAt = this.createdAt ?: System.currentTimeMillis(),
+        address = this.address ?: ""
     )
 }

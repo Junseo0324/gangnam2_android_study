@@ -172,7 +172,8 @@ private fun HomeRecipeCardPreview() {
             rating = 4.0,
             imageUrls = "https://cdn.pixabay.com/photo/2019/09/07/19/02/spanish-paella-4459519_1280.jpg",
             createdAt = 121882118,
-            id = 0
+            id = 0,
+            address = "Seoul"
         ),
     )
 }

@@ -42,15 +42,19 @@ import com.survivalcoding.gangnam2kiandroidstudy.ui.AppTextStyles
 
 @Composable
 fun RecipeCard(
-    recipe: Recipe,
+    recipe: Recipe?,
     modifier: Modifier = Modifier,
     onBookmarkClick: (Int) -> Unit = {},
+    onCardClick: (Int) -> Unit = {}
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
             .aspectRatio(315 / 150f)
             .clip(RoundedCornerShape(10.dp))
+            .clickable {
+                onCardClick(recipe?.id ?: 0)
+            }
     ) {
         //이미지
         AsyncImage(
@@ -60,9 +64,9 @@ fun RecipeCard(
             model = if (LocalInspectionMode.current) {
                 ColorDrawable(YELLOW)
             } else {
-                recipe.imageUrls
+                recipe?.imageUrls
             },
-            contentDescription = recipe.title,
+            contentDescription = recipe?.title,
             contentScale = ContentScale.Crop,
         )
 
@@ -104,7 +108,7 @@ fun RecipeCard(
             )
             Spacer(modifier = Modifier.width(3.dp))
             Text(
-                text = recipe.rating.toString(),
+                text = recipe?.rating.toString(),
                 style = AppTextStyles.smallerTextRegular.copy(fontSize = 8.sp),
                 modifier = Modifier.size(12.dp)
             )
@@ -122,13 +126,13 @@ fun RecipeCard(
             ) {
                 Text(
                     modifier = Modifier.aspectRatio(190 / 41f),
-                    text = recipe.title,
+                    text = recipe?.title ?: "",
                     style = AppTextStyles.smallTextBold.copy(
                         color = AppColors.white
                     ),
                 )
                 Text(
-                    text = "By ${recipe.chef}",
+                    text = "By ${recipe?.chef}",
                     style = AppTextStyles.smallerTextRegular.copy(
                         fontSize = 8.sp,
                         color = AppColors.gray4
@@ -152,7 +156,7 @@ fun RecipeCard(
                 )
 
                 Text(
-                    text = recipe.time,
+                    text = recipe?.time ?: "",
                     style = AppTextStyles.smallerTextRegular.copy(
                         color = AppColors.white
                     ),
@@ -166,7 +170,7 @@ fun RecipeCard(
                         .clip(CircleShape)
                         .background(AppColors.primary20)
                         .clickable {
-                            onBookmarkClick(recipe.id)
+                            onBookmarkClick(recipe?.id ?: 0)
                         },
                     contentAlignment = Alignment.Center
                 ) {
@@ -201,7 +205,8 @@ private fun RecipeCardPreview() {
                 rating = 4.0,
                 time = "20 min",
                 createdAt = System.currentTimeMillis(),
-                id = 0
+                id = 0,
+                address = "Seoul",
             )
         )
     }

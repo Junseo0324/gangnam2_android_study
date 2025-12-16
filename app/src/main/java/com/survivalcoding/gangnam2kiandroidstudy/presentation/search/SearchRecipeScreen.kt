@@ -135,7 +135,8 @@ private fun SearchRecipeScreenPreview() {
                     rating = 4.0,
                     imageUrls = "https://cdn.pixabay.",
                     createdAt = System.currentTimeMillis(),
-                    id = 0
+                    id = 0,
+                    address = "Seoul",
                 )
             ),
         ),
