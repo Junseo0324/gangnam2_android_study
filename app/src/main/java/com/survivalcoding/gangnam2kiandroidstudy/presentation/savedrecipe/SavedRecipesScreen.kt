@@ -19,7 +19,8 @@ import com.survivalcoding.gangnam2kiandroidstudy.ui.AppTextStyles
 
 @Composable
 fun SavedRecipesScreen(
-    state: SavedRecipesState= SavedRecipesState()
+    state: SavedRecipesState= SavedRecipesState(),
+    onBookmarkClick: (Int) -> Unit = {},
 ) {
 
     Column(
@@ -41,7 +42,10 @@ fun SavedRecipesScreen(
             items(state.recipes) { recipe ->
                 RecipeCard(
                     recipe = recipe,
-                    modifier = Modifier.padding(vertical = 10.dp)
+                    modifier = Modifier.padding(vertical = 10.dp),
+                    onBookmarkClick = {
+                        onBookmarkClick(it)
+                    }
                 )
             }
         }

@@ -22,6 +22,9 @@ fun SavedRecipesScreenRoot(
 ) {
     val state = viewModel.state.collectAsState()
     SavedRecipesScreen(
-        state = state.value
+        state = state.value,
+        onBookmarkClick = {
+            viewModel.getRecipes(it)
+        }
     )
 }

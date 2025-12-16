@@ -25,10 +25,10 @@ class SavedRecipesViewModel(
     val state = _state.asStateFlow()
 
     init {
-        getRecipes()
+        getRecipes(0)
     }
 
-    fun getRecipes() {
+    fun getRecipes(id: Int) {
         viewModelScope.launch {
             _state.update {
                 it.copy(
@@ -39,7 +39,7 @@ class SavedRecipesViewModel(
             _state.update {
                 it.copy(
                     isLoading = false,
-                    recipes = getSavedRecipesUseCase.execute()
+                    recipes = getSavedRecipesUseCase.execute(id)
                 )
             }
         }
