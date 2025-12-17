@@ -1,8 +1,7 @@
 package com.survivalcoding.gangnam2kiandroidstudy.domain.usecase
 
 import com.survivalcoding.gangnam2kiandroidstudy.data.datasource.MockRecipeDataSourceImpl
-import com.survivalcoding.gangnam2kiandroidstudy.data.datasource.ProcedureDataSoureImpl
-import com.survivalcoding.gangnam2kiandroidstudy.data.dto.UserDto
+import com.survivalcoding.gangnam2kiandroidstudy.data.datasource.ProcedureDataSourceImpl
 import com.survivalcoding.gangnam2kiandroidstudy.data.repository.IngridentRepositoryImpl
 import com.survivalcoding.gangnam2kiandroidstudy.data.repository.ProcedureRepositoryImpl
 import com.survivalcoding.gangnam2kiandroidstudy.data.repository.RecipeRepositoryImpl
@@ -12,9 +11,7 @@ import com.survivalcoding.gangnam2kiandroidstudy.domain.repository.ProcedureRepo
 import com.survivalcoding.gangnam2kiandroidstudy.domain.repository.RecipeRepository
 import junit.framework.TestCase
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
 import org.junit.Test
-import kotlin.collections.map
 
 class GetRecipeDetailsUseCaseTest {
 
@@ -25,7 +22,7 @@ class GetRecipeDetailsUseCaseTest {
         recipeDataSource = MockRecipeDataSourceImpl()
     )
     val procedureRepository: ProcedureRepository = ProcedureRepositoryImpl(
-        procedureDataSource = ProcedureDataSoureImpl()
+        procedureDataSource = ProcedureDataSourceImpl()
     )
     val useCase = GetRecipeDetailsUseCase(
         recipeRepository = recipeRepository,

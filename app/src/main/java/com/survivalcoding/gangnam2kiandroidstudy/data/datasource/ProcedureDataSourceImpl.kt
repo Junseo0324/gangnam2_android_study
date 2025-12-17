@@ -2,7 +2,7 @@ package com.survivalcoding.gangnam2kiandroidstudy.data.datasource
 
 import com.survivalcoding.gangnam2kiandroidstudy.data.dto.ProcedureDto
 
-class ProcedureDataSoureImpl : ProcedureDataSource {
+class ProcedureDataSourceImpl : ProcedureDataSource {
     private val procedures = listOf(
         ProcedureDto(recipeId = 1, step = 1, content = "Preheat the oven to 350°F (175°C)."),
         ProcedureDto(recipeId = 1, step = 2, content = "Remove the membrane from the back of the ribs if it is still attached."),

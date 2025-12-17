@@ -15,6 +15,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 
 @Module
@@ -22,21 +23,25 @@ import dagger.hilt.components.SingletonComponent
 object RepositoryModule {
 
     @Provides
+    @Singleton
     fun provideRecipeRepository(recipeDataSource: RecipeDataSource): RecipeRepository {
         return RecipeRepositoryImpl(recipeDataSource)
     }
 
     @Provides
+    @Singleton
     fun provideIngridentRepository(recipeDataSource: RecipeDataSource): IngridentRepository {
         return IngridentRepositoryImpl(recipeDataSource)
     }
 
     @Provides
+    @Singleton
     fun provideProcedureRepository(procedureDataSource: ProcedureDataSource): ProcedureRepository {
         return ProcedureRepositoryImpl(procedureDataSource)
     }
 
     @Provides
+    @Singleton
     fun provideBookmarkRepository(userDataSource: UserDataSource): BookmarkRepository {
         return BookmarkRepositoryImpl(userDataSource)
     }
