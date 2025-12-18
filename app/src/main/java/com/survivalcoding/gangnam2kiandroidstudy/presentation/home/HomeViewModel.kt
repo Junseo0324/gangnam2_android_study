@@ -25,7 +25,6 @@ class HomeViewModel(
 
 
     fun onAction(action: HomeAction) {
-        Log.d("TAG", "onAction: search $action")
         when(action) {
             is HomeAction.SearchRecipe -> {
                 // navigate Search
@@ -38,7 +37,7 @@ class HomeViewModel(
         }
     }
 
-    fun onSelectCategory(category: String) {
+    private fun onSelectCategory(category: String) {
         _state.update {
             it.copy(
                 selectedCategory = category,
@@ -91,8 +90,7 @@ class HomeViewModel(
         }
     }
 
-    fun bookmarkRecipe(id: Int) {
-        Log.d("TAG", "bookmarkRecipe: $id")
+    private fun bookmarkRecipe(id: Int) {
         viewModelScope.launch {
             _state.update {
                 it.copy(
@@ -119,7 +117,6 @@ class HomeViewModel(
                 )
             }
         }
-        Log.d("TAG", "bookmarkRecipe: ${_state.value.bookmarkIds}")
     }
 
 }
