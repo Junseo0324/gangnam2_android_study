@@ -78,6 +78,9 @@ fun NavigationRoot(
                                     HomeScreenRoot(
                                         onSearchClick = {
                                             topLevelBackStack.add(Route.SearchRecipe)
+                                        },
+                                        onRecipeClick = {
+                                            topLevelBackStack.add(Route.Ingrident(recipeId = it))
                                         }
                                     )
                                 }

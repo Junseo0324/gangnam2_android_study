@@ -11,15 +11,21 @@ import org.koin.androidx.compose.koinViewModel
 fun HomeScreenRoot(
     viewModel: HomeViewModel = koinViewModel(),
     onSearchClick: () -> Unit = {},
+    onRecipeClick: (Int) -> Unit = {},
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     HomeScreen(
         state = state,
         onAction = { action ->
-            if (action == HomeAction.SearchRecipe) {
-                onSearchClick()
-            } else {
-                viewModel.onAction(action)
+            when (action) {
+                is HomeAction.SelectCategory -> {
+                    viewModel.onAction(action)
+                }
+                is HomeAction.SearchRecipe -> onSearchClick()
+                is HomeAction.SelectRecipe -> onRecipeClick(action.id)
+                is HomeAction.BookmarkRecipe -> {
+                    viewModel.onAction(action)
+                }
             }
         }
     )

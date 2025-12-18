@@ -21,9 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.ColorPainter
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -124,7 +121,16 @@ fun HomeScreen(
             horizontalArrangement = Arrangement.spacedBy(15.dp)
         ) {
             items(state.filteredRecipes) { recipe ->
-                HomeRecipeCard(recipe = recipe)
+                HomeRecipeCard(
+                    recipe = recipe,
+                    onBookmarkClick = {
+                        onAction(HomeAction.BookmarkRecipe(it))
+                    },
+                    isBookmark = recipe.id in state.bookmarkIds,
+                    onClick = {
+                        onAction(HomeAction.SelectRecipe(it))
+                    }
+                )
             }
         }
 
@@ -141,7 +147,9 @@ fun HomeScreen(
                 .padding(horizontal = 30.dp),
         ) {
             items(state.recipes) { recipe ->
-                NewRecipeCard(recipe = recipe)
+                NewRecipeCard(recipe = recipe) {
+                    onAction(HomeAction.SelectRecipe(it))
+                }
             }
         }
 

@@ -21,7 +21,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -29,7 +28,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
@@ -46,11 +44,15 @@ import com.survivalcoding.gangnam2kiandroidstudy.ui.AppTextStyles
 fun NewRecipeCard(
     modifier: Modifier = Modifier,
     recipe: Recipe,
+    onClick: (Int) -> Unit = {}
 ) {
     Box(
         modifier
             .height(127.dp)
             .aspectRatio(251 / 127f)
+            .clickable {
+                onClick(recipe.id)
+            }
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
