@@ -30,6 +30,33 @@ class SearchRecipesViewModel(
             .launchIn(viewModelScope)
     }
 
+
+    fun onAction(action: SearchRecipesAction) {
+        when (action) {
+            is SearchRecipesAction.OnSearchRecipes -> {
+                updateSearchQuery(action.query)
+            }
+
+            SearchRecipesAction.OnTapFilterButton -> {
+                tapFilterButton()
+            }
+            is SearchRecipesAction.OnUpdateFilterSearchState -> {
+                applyFilters(action.filterState)
+            }
+            is SearchRecipesAction.SelectRecipes -> {
+
+            }
+        }
+    }
+
+    private fun tapFilterButton() {
+        _state.update {
+            it.copy(
+                showBottomSheet = !it.showBottomSheet,
+            )
+        }
+    }
+
     fun getAllRecipes() {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
@@ -44,24 +71,19 @@ class SearchRecipesViewModel(
         }
     }
 
-    fun updateSearchQuery(query: String) {
+    private fun updateSearchQuery(query: String) {
         _state.update { currentState ->
             currentState.copy(searchQuery = query)
         }
     }
 
-    fun applyFilters(newFilterState: FilterSearchState) {
+    private fun applyFilters(newFilterState: FilterSearchState) {
         _state.update {
             it.copy(filterState = newFilterState)
         }
         filterRecipes()
     }
 
-    fun showBottomSheet(isFilterOpen: Boolean) {
-        _state.update {
-            it.copy(showBottomSheet = isFilterOpen)
-        }
-    }
 
     private fun filterRecipes() {
         val query = _state.value.searchQuery
@@ -134,4 +156,5 @@ class SearchRecipesViewModel(
             )
         }
     }
+
 }

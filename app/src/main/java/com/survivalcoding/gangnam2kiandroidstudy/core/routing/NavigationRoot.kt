@@ -107,7 +107,11 @@ fun NavigationRoot(
             }
 
             entry<Route.SearchRecipe> {
-                SearchRecipeScreenRoot()
+                SearchRecipeScreenRoot(
+                    onRecipeClick = { recipeId ->
+                        topLevelBackStack.add(Route.Ingrident(recipeId = recipeId))
+                    }
+                )
             }
 
         }

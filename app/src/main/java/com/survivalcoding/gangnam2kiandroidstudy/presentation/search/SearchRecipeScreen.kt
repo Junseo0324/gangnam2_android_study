@@ -32,11 +32,9 @@ import com.survivalcoding.gangnam2kiandroidstudy.ui.AppTextStyles
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchRecipeScreen(
-    state: SearchRecipeState= SearchRecipeState(),
+    state: SearchRecipeState = SearchRecipeState(),
     showBottomSheet: Boolean = false,
-    onSearchQuery: (String) -> Unit = {},
-    tapFilterButton: (Boolean) -> Unit = {},
-    onApplyFilter: (FilterSearchState) -> Unit = {}
+    onAction: (SearchRecipesAction) -> Unit = {},
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -64,11 +62,11 @@ fun SearchRecipeScreen(
                     value = state.searchQuery,
                     placeholder = "Search Recipe",
                 ) {
-                    onSearchQuery(it)
+                    onAction(SearchRecipesAction.OnSearchRecipes(it))
                 }
                 Spacer(modifier = Modifier.width(20.dp))
                 FilterBox {
-                    tapFilterButton(true)
+                    onAction(SearchRecipesAction.OnTapFilterButton)
                 }
             }
             Spacer(modifier = Modifier.height(20.dp))
@@ -96,7 +94,9 @@ fun SearchRecipeScreen(
                 items(state.filteredRecipes) {
                     SearchRecipeCard(
                         recipe = it
-                    )
+                    ) { recipeId ->
+                        onAction(SearchRecipesAction.SelectRecipes(recipeId))
+                    }
                 }
 
             }
@@ -105,13 +105,13 @@ fun SearchRecipeScreen(
         if (showBottomSheet) {
             FilterSearchBottomSheet(
                 sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-                onDismiss = {
-                    tapFilterButton(false)
-                },
                 currentFilterState = state.filterState,
+                onDismiss = {
+                    onAction(SearchRecipesAction.OnTapFilterButton)
+                },
                 onApplyFilter = {
-                    onApplyFilter(it)
-                    tapFilterButton(false)
+                    onAction(SearchRecipesAction.OnUpdateFilterSearchState(it))
+                    onAction(SearchRecipesAction.OnTapFilterButton)
                 }
             )
         }
