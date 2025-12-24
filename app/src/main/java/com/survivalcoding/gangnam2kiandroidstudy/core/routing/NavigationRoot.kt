@@ -103,7 +103,12 @@ fun NavigationRoot(
                 )
             }
             entry<Route.Ingrident> { route ->
-                IngredientScreenRoot(recipeId = route.recipeId)
+                IngredientScreenRoot(
+                    recipeId = route.recipeId,
+                    onBackClick = {
+                        topLevelBackStack.remove(topLevelBackStack.last())
+                    }
+                )
             }
 
             entry<Route.SearchRecipe> {

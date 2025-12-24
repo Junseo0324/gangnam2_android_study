@@ -2,6 +2,7 @@ package com.survivalcoding.gangnam2kiandroidstudy.presentation.ingredient
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -46,7 +47,8 @@ import com.survivalcoding.gangnam2kiandroidstudy.ui.AppTextStyles
 fun IngredientScreen(
     state: IngridentState = IngridentState(),
     modifier: Modifier = Modifier,
-    onValueChange: (Int) -> Unit = {}
+    onValueChange: (Int) -> Unit = {},
+    onBackClick: () -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -63,7 +65,9 @@ fun IngredientScreen(
             Icon(
                 imageVector = Icons.AutoMirrored.Default.ArrowBack,
                 contentDescription = "back",
-                modifier = Modifier.size(20.dp)
+                modifier = Modifier
+                    .size(20.dp)
+                    .clickable { onBackClick() }
             )
             Icon(
                 imageVector = Icons.Default.MoreHoriz,

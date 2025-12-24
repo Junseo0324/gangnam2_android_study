@@ -8,6 +8,7 @@ import org.koin.androidx.compose.koinViewModel
 fun IngredientScreenRoot(
     recipeId: Int,
     viewModel: IngridentViewModel = koinViewModel(),
+    onBackClick: () -> Unit = {}
 ) {
     viewModel.loadRecipeDetail(recipeId)
 
@@ -17,6 +18,7 @@ fun IngredientScreenRoot(
         state = state.value,
         onValueChange = { index ->
             viewModel.toggleTab(index)
-        }
+        },
+        onBackClick = onBackClick
     )
 }
