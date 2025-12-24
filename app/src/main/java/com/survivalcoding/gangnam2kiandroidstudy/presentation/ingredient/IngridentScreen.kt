@@ -35,6 +35,7 @@ import com.survivalcoding.gangnam2kiandroidstudy.R
 import com.survivalcoding.gangnam2kiandroidstudy.domain.model.Ingrident
 import com.survivalcoding.gangnam2kiandroidstudy.domain.model.Procedure
 import com.survivalcoding.gangnam2kiandroidstudy.domain.model.Recipe
+import com.survivalcoding.gangnam2kiandroidstudy.presentation.component.DropDown
 import com.survivalcoding.gangnam2kiandroidstudy.presentation.component.IngredientItem
 import com.survivalcoding.gangnam2kiandroidstudy.presentation.component.ProcedureItem
 import com.survivalcoding.gangnam2kiandroidstudy.presentation.component.RecipeCard
@@ -46,8 +47,9 @@ import com.survivalcoding.gangnam2kiandroidstudy.ui.AppTextStyles
 @Composable
 fun IngredientScreen(
     state: IngridentState = IngridentState(),
+    isDropDownExpanded: Boolean = false,
     modifier: Modifier = Modifier,
-    onValueChange: (Int) -> Unit = {},
+    onAction: (IngredientAction) -> Unit= {},
     onBackClick: () -> Unit = {}
 ) {
     Column(
@@ -69,11 +71,26 @@ fun IngredientScreen(
                     .size(20.dp)
                     .clickable { onBackClick() }
             )
-            Icon(
-                imageVector = Icons.Default.MoreHoriz,
-                contentDescription = "more",
-                modifier = Modifier.size(20.dp)
-            )
+            Box {
+                Icon(
+                    imageVector = Icons.Default.MoreHoriz,
+                    contentDescription = "more",
+                    modifier = Modifier
+                        .size(20.dp)
+                        .clickable {
+                            onAction(IngredientAction.OnDropDownClick)
+                        }
+                )
+                DropDown(
+                    expanded = isDropDownExpanded,
+                    onDismiss = {
+                        onAction(IngredientAction.OnDropDownDismiss)
+                    },
+                    onShare = {
+                        onAction(IngredientAction.OnShareClick)
+                    }
+                )
+            }
         }
         RecipeCard(
             recipe = state.recipe,
@@ -154,7 +171,7 @@ fun IngredientScreen(
             labels = listOf("Ingredient", "Procedure"),
             selectedIndex = state.selectedIndex,
             onValueChange = {
-                onValueChange(it)
+                onAction(IngredientAction.OnValueChange(it))
             }
         )
 
