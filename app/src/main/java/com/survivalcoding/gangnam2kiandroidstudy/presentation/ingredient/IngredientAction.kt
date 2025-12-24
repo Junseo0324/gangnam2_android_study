@@ -6,6 +6,5 @@ sealed interface IngredientAction {
     data object OnDropDownClick: IngredientAction
     data object OnDropDownDismiss: IngredientAction
     data object OnShareClick: IngredientAction
-    data class OnCopyClick(val text: String): IngredientAction
 
 }

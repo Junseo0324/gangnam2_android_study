@@ -43,7 +43,6 @@ fun IngredientScreenRoot(
                     showDialog = true
                 }
 
-                else -> {}
             }
         },
         onBackClick = onBackClick
@@ -55,7 +54,7 @@ fun IngredientScreenRoot(
                 showDialog = false
             },
             onCopy = { link ->
-                viewModel.onAction(IngredientAction.OnCopyClick(link))
+                viewModel.onCopyClick(link)
                 showDialog = false
             }
         )

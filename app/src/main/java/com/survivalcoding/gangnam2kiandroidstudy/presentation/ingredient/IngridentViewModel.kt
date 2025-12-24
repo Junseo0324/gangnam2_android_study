@@ -49,10 +49,6 @@ class IngridentViewModel(
                 toggleTab(action.value)
             }
 
-            is IngredientAction.OnCopyClick -> {
-                onCopyClick(action.text)
-            }
-
             else -> {
 
             }
