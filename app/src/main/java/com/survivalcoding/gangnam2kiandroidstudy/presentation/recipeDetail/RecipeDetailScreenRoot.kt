@@ -1,4 +1,4 @@
-package com.survivalcoding.gangnam2kiandroidstudy.presentation.ingredient
+package com.survivalcoding.gangnam2kiandroidstudy.presentation.recipeDetail
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -10,9 +10,9 @@ import com.survivalcoding.gangnam2kiandroidstudy.presentation.component.ShareDia
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun IngredientScreenRoot(
+fun RecipeDetailScreenRoot(
     recipeId: Int,
-    viewModel: IngridentViewModel = koinViewModel(),
+    viewModel: RecipeDetailViewModel = koinViewModel(),
     onBackClick: () -> Unit = {}
 ) {
     viewModel.loadRecipeDetail(recipeId)
@@ -22,23 +22,23 @@ fun IngredientScreenRoot(
     var isDropDownExpanded by remember { mutableStateOf(false) }
     var showDialog by remember { mutableStateOf(false) }
 
-    IngredientScreen(
+    RecipeDetailScreen(
         state = state.value,
         isDropDownExpanded = isDropDownExpanded,
         onAction = { action ->
             when(action) {
-                is IngredientAction.OnValueChange -> {
+                is RecipeDetailAction.OnValueChange -> {
                     viewModel.onAction(action)
                 }
-                IngredientAction.OnDropDownClick -> {
+                RecipeDetailAction.OnDropDownClick -> {
                     isDropDownExpanded = true
                 }
 
-                IngredientAction.OnDropDownDismiss -> {
+                RecipeDetailAction.OnDropDownDismiss -> {
                     isDropDownExpanded = false
                 }
 
-                IngredientAction.OnShareClick -> {
+                RecipeDetailAction.OnShareClick -> {
                     isDropDownExpanded = false
                     showDialog = true
                 }

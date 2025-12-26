@@ -1,4 +1,4 @@
-package com.survivalcoding.gangnam2kiandroidstudy.presentation.ingredient
+package com.survivalcoding.gangnam2kiandroidstudy.presentation.recipeDetail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -45,11 +45,11 @@ import com.survivalcoding.gangnam2kiandroidstudy.ui.AppColors
 import com.survivalcoding.gangnam2kiandroidstudy.ui.AppTextStyles
 
 @Composable
-fun IngredientScreen(
-    state: IngridentState = IngridentState(),
+fun RecipeDetailScreen(
+    state: RecipeDetailState = RecipeDetailState(),
     isDropDownExpanded: Boolean = false,
     modifier: Modifier = Modifier,
-    onAction: (IngredientAction) -> Unit= {},
+    onAction: (RecipeDetailAction) -> Unit= {},
     onBackClick: () -> Unit = {}
 ) {
     Column(
@@ -78,16 +78,16 @@ fun IngredientScreen(
                     modifier = Modifier
                         .size(20.dp)
                         .clickable {
-                            onAction(IngredientAction.OnDropDownClick)
+                            onAction(RecipeDetailAction.OnDropDownClick)
                         }
                 )
                 DropDown(
                     expanded = isDropDownExpanded,
                     onDismiss = {
-                        onAction(IngredientAction.OnDropDownDismiss)
+                        onAction(RecipeDetailAction.OnDropDownDismiss)
                     },
                     onShare = {
-                        onAction(IngredientAction.OnShareClick)
+                        onAction(RecipeDetailAction.OnShareClick)
                     }
                 )
             }
@@ -171,7 +171,7 @@ fun IngredientScreen(
             labels = listOf("Ingredient", "Procedure"),
             selectedIndex = state.selectedIndex,
             onValueChange = {
-                onAction(IngredientAction.OnValueChange(it))
+                onAction(RecipeDetailAction.OnValueChange(it))
             }
         )
 
@@ -266,9 +266,9 @@ fun IngredientScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun IngredientScreenPreview() {
-    IngredientScreen(
-        state = IngridentState(
+private fun RecipeDetailScreenPreview() {
+    RecipeDetailScreen(
+        state = RecipeDetailState(
             isLoading = false,
             recipe = Recipe(
                 title = "Spicy chicken burger with French fries",

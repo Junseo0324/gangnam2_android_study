@@ -1,4 +1,4 @@
-package com.survivalcoding.gangnam2kiandroidstudy.presentation.ingredient
+package com.survivalcoding.gangnam2kiandroidstudy.presentation.recipeDetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,12 +9,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class IngridentViewModel(
+class RecipeDetailViewModel(
     private val getRecipeDetailsUseCase: GetRecipeDetailsUseCase,
     private val copyLinkUseCase: CopyLinkUseCase
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(IngridentState())
+    private val _state = MutableStateFlow(RecipeDetailState())
     val state = _state.asStateFlow()
 
 
@@ -43,9 +43,9 @@ class IngridentViewModel(
         copyLinkUseCase.execute(text = text)
     }
 
-    fun onAction(action: IngredientAction) {
+    fun onAction(action: RecipeDetailAction) {
         when (action) {
-            is IngredientAction.OnValueChange -> {
+            is RecipeDetailAction.OnValueChange -> {
                 toggleTab(action.value)
             }
 
