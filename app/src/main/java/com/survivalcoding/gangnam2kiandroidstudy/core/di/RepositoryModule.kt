@@ -18,7 +18,7 @@ import org.koin.dsl.module
 val repositoryModule = module {
     // get() -> dataSource 등록 한거를 알아서 가져다 쓴다.
     single<RecipeRepository> { RecipeRepositoryImpl(get()) }
-    single<BookmarkRepository> { BookmarkRepositoryImpl(get()) }
+
     single<ProcedureRepository> { ProcedureRepositoryImpl(get()) }
     single<IngridentRepository> { IngridentRepositoryImpl(get()) }
     single<ClipBoardRepository> { ClipboardRepositoryImpl(androidContext()) }
