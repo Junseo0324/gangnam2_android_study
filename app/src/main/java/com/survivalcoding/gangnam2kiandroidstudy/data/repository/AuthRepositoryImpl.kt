@@ -1,20 +1,25 @@
 package com.survivalcoding.gangnam2kiandroidstudy.data.repository
 
-import com.survivalcoding.gangnam2kiandroidstudy.data.datasource.AuthDataSource
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.survivalcoding.gangnam2kiandroidstudy.domain.repository.AuthRepository
+import kotlinx.coroutines.tasks.await
 
 class AuthRepositoryImpl(
-    private val authDataSource: AuthDataSource
+    private val auth: FirebaseAuth
 ): AuthRepository {
     override suspend fun signInWithEmail(email: String, password: String) {
-        authDataSource.signInWithEmail(email, password)
+        auth.signInWithEmailAndPassword(email, password)
+            .await()
     }
 
     override suspend fun signUpWithEmail(email: String, password: String) {
-        authDataSource.signUpWithEmail(email, password)
+        auth.createUserWithEmailAndPassword(email, password)
+            .await()
     }
 
     override suspend fun signInWithGoogle(idToken: String) {
-        authDataSource.signInWithGoogle(idToken)
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential).await()
     }
 }

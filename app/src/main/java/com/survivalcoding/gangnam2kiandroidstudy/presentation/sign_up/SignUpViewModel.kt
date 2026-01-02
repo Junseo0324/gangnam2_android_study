@@ -65,11 +65,6 @@ class SignUpViewModel(
         }
     }
 
-    fun googleSignUp() {
-        viewModelScope.launch {
-            _event.emit(SignUpEvent.LaunchGoogleSignIn)
-        }
-    }
 
     fun signInWithGoogle(idToken: String) {
         viewModelScope.launch {

@@ -1,9 +1,5 @@
 package com.survivalcoding.gangnam2kiandroidstudy.core.di
 
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
-import com.survivalcoding.gangnam2kiandroidstudy.data.datasource.AuthDataSource
-import com.survivalcoding.gangnam2kiandroidstudy.data.datasource.AuthDataSourceImpl
 import com.survivalcoding.gangnam2kiandroidstudy.data.datasource.MockRecipeDataSourceImpl
 import com.survivalcoding.gangnam2kiandroidstudy.data.datasource.ProcedureDataSource
 import com.survivalcoding.gangnam2kiandroidstudy.data.datasource.ProcedureDataSoureImpl
@@ -16,9 +12,4 @@ val datasourceModule = module {
 
     single<ProcedureDataSource> { ProcedureDataSoureImpl() }
 
-    single<AuthDataSource> {
-        AuthDataSourceImpl(
-            auth = Firebase.auth
-        )
-    }
 }

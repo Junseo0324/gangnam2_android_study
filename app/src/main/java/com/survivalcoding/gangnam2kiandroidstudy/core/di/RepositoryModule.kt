@@ -1,5 +1,7 @@
 package com.survivalcoding.gangnam2kiandroidstudy.core.di
 
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import com.survivalcoding.gangnam2kiandroidstudy.data.repository.AuthRepositoryImpl
 import com.survivalcoding.gangnam2kiandroidstudy.data.repository.ClipboardRepositoryImpl
 import com.survivalcoding.gangnam2kiandroidstudy.data.repository.IngridentRepositoryImpl
@@ -23,7 +25,7 @@ val repositoryModule = module {
 
     single<AuthRepository> {
         AuthRepositoryImpl(
-            authDataSource = get()
+            auth = Firebase.auth
         )
     }
 }
