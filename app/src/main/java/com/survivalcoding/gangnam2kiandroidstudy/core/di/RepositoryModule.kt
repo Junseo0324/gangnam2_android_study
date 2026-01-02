@@ -1,13 +1,9 @@
 package com.survivalcoding.gangnam2kiandroidstudy.core.di
 
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
-import com.survivalcoding.gangnam2kiandroidstudy.data.repository.AuthRepositoryImpl
 import com.survivalcoding.gangnam2kiandroidstudy.data.repository.ClipboardRepositoryImpl
 import com.survivalcoding.gangnam2kiandroidstudy.data.repository.IngridentRepositoryImpl
 import com.survivalcoding.gangnam2kiandroidstudy.data.repository.ProcedureRepositoryImpl
 import com.survivalcoding.gangnam2kiandroidstudy.data.repository.RecipeRepositoryImpl
-import com.survivalcoding.gangnam2kiandroidstudy.domain.repository.AuthRepository
 import com.survivalcoding.gangnam2kiandroidstudy.domain.repository.ClipBoardRepository
 import com.survivalcoding.gangnam2kiandroidstudy.domain.repository.IngridentRepository
 import com.survivalcoding.gangnam2kiandroidstudy.domain.repository.ProcedureRepository
@@ -22,10 +18,4 @@ val repositoryModule = module {
     single<ProcedureRepository> { ProcedureRepositoryImpl(get()) }
     single<IngridentRepository> { IngridentRepositoryImpl(get()) }
     single<ClipBoardRepository> { ClipboardRepositoryImpl(androidContext()) }
-
-    single<AuthRepository> {
-        AuthRepositoryImpl(
-            auth = Firebase.auth
-        )
-    }
 }
