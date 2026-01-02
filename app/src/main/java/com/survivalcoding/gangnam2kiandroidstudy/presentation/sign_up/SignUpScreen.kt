@@ -196,7 +196,9 @@ fun SignUpScreen(
                 SocialButton(
                     id = R.drawable.social_icons_google,
                     description = "구글 로그인"
-                )
+                ) {
+                    onAction(SignUpAction.OnGoogleClick)
+                }
                 Spacer(modifier = Modifier.width(25.dp))
                 SocialButton(
                     id = R.drawable.social_icons_facebook,

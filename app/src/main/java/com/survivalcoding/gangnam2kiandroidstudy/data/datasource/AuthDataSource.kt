@@ -10,4 +10,7 @@ interface AuthDataSource {
         email: String,
         password: String
     )
+
+    suspend fun signInWithGoogle(idToken: String)
+
 }

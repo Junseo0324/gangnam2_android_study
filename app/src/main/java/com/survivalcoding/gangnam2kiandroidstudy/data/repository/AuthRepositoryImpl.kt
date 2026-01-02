@@ -13,4 +13,8 @@ class AuthRepositoryImpl(
     override suspend fun signUpWithEmail(email: String, password: String) {
         authDataSource.signUpWithEmail(email, password)
     }
+
+    override suspend fun signInWithGoogle(idToken: String) {
+        authDataSource.signInWithGoogle(idToken)
+    }
 }

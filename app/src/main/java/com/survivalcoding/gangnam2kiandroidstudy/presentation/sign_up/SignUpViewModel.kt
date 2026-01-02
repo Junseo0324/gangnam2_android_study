@@ -37,13 +37,20 @@ class SignUpViewModel(
             SignUpAction.OnToggleCheck ->
                 _state.update { it.copy(isChecked = !it.isChecked) }
 
-            SignUpAction.OnSignUpClick ->
+            SignUpAction.OnSignUpClick -> {
                 signUp()
+            }
 
+            SignUpAction.OnGoogleClick -> {
+                viewModelScope.launch {
+                    _event.emit(SignUpEvent.LaunchGoogleSignIn)
+                }
+            }
             else -> Unit
         }
 
     }
+
     fun signUp() {
         viewModelScope.launch {
             try {
@@ -57,4 +64,22 @@ class SignUpViewModel(
             }
         }
     }
+
+    fun googleSignUp() {
+        viewModelScope.launch {
+            _event.emit(SignUpEvent.LaunchGoogleSignIn)
+        }
+    }
+
+    fun signInWithGoogle(idToken: String) {
+        viewModelScope.launch {
+            try {
+                authRepository.signInWithGoogle(idToken)
+                _event.emit(SignUpEvent.NavigateToHome)
+            } catch (e: Exception) {
+                _event.emit(SignUpEvent.ShowError("Google signup failed"))
+            }
+        }
+    }
+
 }

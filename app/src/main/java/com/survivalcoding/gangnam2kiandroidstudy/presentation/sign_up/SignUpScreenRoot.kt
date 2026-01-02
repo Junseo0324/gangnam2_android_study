@@ -3,7 +3,15 @@ package com.survivalcoding.gangnam2kiandroidstudy.presentation.sign_up
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.survivalcoding.gangnam2kiandroidstudy.R
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -13,11 +21,40 @@ fun SignUpScreenRoot(
     viewModel: SignUpViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+
+
+    val googleIdOption = GetGoogleIdOption.Builder()
+        .setServerClientId(stringResource(R.string.default_web_client_id))
+        .setFilterByAuthorizedAccounts(false)
+        .build()
+
+    val request = GetCredentialRequest.Builder()
+        .addCredentialOption(googleIdOption)
+        .build()
+
+    val credentialManager = remember {
+        CredentialManager.create(context)
+    }
+
 
     LaunchedEffect(Unit) {
         viewModel.event.collect { event ->
-            when(event) {
+            when (event) {
                 SignUpEvent.NavigateToHome -> onNavigateToHome()
+                SignUpEvent.LaunchGoogleSignIn -> {
+                    val result = credentialManager.getCredential(
+                        context = context,
+                        request = request
+                    )
+
+                    val credential = result.credential
+                    if (credential is GoogleIdTokenCredential) {
+                        viewModel.signInWithGoogle(credential.idToken)
+                    }
+
+                }
+
                 is SignUpEvent.ShowError -> {
                     TODO()
                 }
