@@ -15,7 +15,6 @@ class SavedRecipesActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySavedRecipesBinding
 
-    private lateinit var recipeListFragment: RecipeListFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,25 +29,25 @@ class SavedRecipesActivity : AppCompatActivity() {
             insets
         }
 
-        recipeListFragment = RecipeListFragment(
-            object : RecipeListFragment.OnRecipeSelectedListener {
-                override fun onRecipeSelected(recipeId: Int) {
-                    val bundle = bundleOf("id" to recipeId)
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, DetailFragment().apply {
-                            arguments = bundle
-                        })
-                        .addToBackStack(null)
-                        .commit()
-                }
-            }
-        )
+
 
         if (savedInstanceState == null) {
+            val recipeListFragment = RecipeListFragment(
+                object : RecipeListFragment.OnRecipeSelectedListener {
+                    override fun onRecipeSelected(recipeId: Int) {
+                        val bundle = bundleOf("id" to recipeId)
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, DetailFragment().apply {
+                                arguments = bundle
+                            })
+                            .addToBackStack(null)
+                            .commit()
+                    }
+                }
+            )
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, recipeListFragment)
                 .commit()
         }
-
     }
 }
