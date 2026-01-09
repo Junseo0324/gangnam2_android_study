@@ -11,9 +11,12 @@ import com.survivalcoding.gangnam2kiandroidstudy.databinding.ItemRecipeCardBindi
 import com.survivalcoding.gangnam2kiandroidstudy.domain.model.Recipe
 
 class SavedRecipeAdapter(
-    private val onBookmarkClick: (Int) -> Unit,
-    private val onCardClick: (Int) -> Unit
+    private val listener: OnRecipeClickListener
 ) : ListAdapter<Recipe, SavedRecipeAdapter.RecipeViewHolder>(RecipeDiffCallback()) {
+
+    interface OnRecipeClickListener {
+        fun onRecipeClick(recipeId: Int)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         val binding = ItemRecipeCardBinding.inflate(
@@ -21,7 +24,7 @@ class SavedRecipeAdapter(
             parent,
             false
         )
-        return RecipeViewHolder(binding, onBookmarkClick, onCardClick)
+        return RecipeViewHolder(binding, listener)
     }
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
@@ -30,8 +33,7 @@ class SavedRecipeAdapter(
 
     class RecipeViewHolder(
         private val binding: ItemRecipeCardBinding,
-        private val onBookmarkClick: (Int) -> Unit,
-        private val onCardClick: (Int) -> Unit
+        private val listener: OnRecipeClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(recipe: Recipe) {
@@ -52,12 +54,9 @@ class SavedRecipeAdapter(
 
                 // 클릭 리스너
                 cardView.setOnClickListener {
-                    onCardClick(recipe.id)
+                    listener.onRecipeClick(recipe.id)
                 }
 
-                btnBookmark.setOnClickListener {
-                    onBookmarkClick(recipe.id)
-                }
             }
         }
     }

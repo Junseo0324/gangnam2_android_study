@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.survivalcoding.gangnam2kiandroidstudy.databinding.FragmentRecipeListBinding
 import com.survivalcoding.gangnam2kiandroidstudy.presentation.savedrecipe.SavedRecipesViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -43,11 +44,11 @@ class RecipeListFragment : Fragment() {
 
     private fun setupRecyclerView() {
         recipeAdapter = SavedRecipeAdapter(
-            onBookmarkClick = {
-
-            },
-            onCardClick = {
-                //
+            object : SavedRecipeAdapter.OnRecipeClickListener {
+                override fun onRecipeClick(recipeId: Int) {
+                    Toast.makeText(requireContext(), "ID: $recipeId", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
         )
 
